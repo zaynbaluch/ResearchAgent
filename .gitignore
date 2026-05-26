@@ -1,0 +1,25 @@
+# Node.js
+node_modules/
+.npm
+/frontend/.next/
+/frontend/out/
+/frontend/build
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.env
+
+# Database
+/backend/checkpoints.db*
+*.sqlite3
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,70 +1,92 @@
-# Scribe Design System & UI Guidelines
+# Research Agent — Design System & UI Guidelines
 
-This document serves as the source of truth for the **Scribe** aesthetic. Follow these principles to maintain the "advanced agentic" look and feel.
+This document serves as the source of truth for the **Research Agent** aesthetic.
 
 ## 1. Design Philosophy
-Scribe uses a **High-Density, Glassmorphic Dark Mode** aesthetic. It is inspired by modern developer tools (Vercel, Linear, Framer) and emphasizes:
-- **Depth**: Through subtle borders and backdrop blurs.
-- **Motion**: Every interaction should feel responsive and fluid.
-- **Ambient Glow**: Using soft, large background blobs instead of sharp gradients.
-- **Precision**: High density, small typography (`text-sm` by default), and compact padding.
+
+Research Agent uses a **High-Density, Glassmorphic Dark Mode** aesthetic inspired by modern developer tools (Vercel, Linear, Cursor). It emphasizes:
+
+- **Depth**: Subtle borders, backdrop blurs, layered glassmorphic surfaces.
+- **Motion**: Responsive agent transitions, streaming text, pulsing graph nodes.
+- **Ambient Glow**: Soft background blobs and nebula gradients.
+- **Precision**: High density, compact padding, visible structural grid.
+- **Explainability**: Graph visualization, reasoning traces, and confidence scores are first-class.
 
 ## 2. Color Palette
-The system is built on a deep monochromatic base with vibrant accent gradients.
 
-### Base Colors
-- **Background**: `#0a0a0f` (Deep obsidian)
-- **Surface (Cards)**: `#18181b/50` (Translucent zinc)
-- **Borders**: `rgba(255, 255, 255, 0.05)` to `0.15`
-- **Text Primary**: `#e4e4e7` (Zinc 200)
-- **Text Secondary**: `#a1a1aa` (Zinc 400)
+### Base Colors (Dark Mode)
+| Token | Value | Usage |
+|---|---|---|
+| `--bg-base` | `#000000` | Page background |
+| `--bg-surface` | `#0A0A0C` | Card backgrounds |
+| `--bg-surface-transparent` | `rgba(10, 10, 12, 0.6)` | Glassmorphic cards |
+| `--bg-elevated` | `#111114` | Hover states |
+| `--grid-line` | `rgba(255,255,255,0.08)` | Structural grid |
+| `--grid-line-strong` | `rgba(255,255,255,0.15)` | Section borders |
+| `--text-primary` | `#FFFFFF` | Headings, body |
+| `--text-secondary` | `#A1A1AA` | Descriptions |
+| `--text-muted` | `#52525B` | Captions, labels |
+| `--border-subtle` | `rgba(255,255,255,0.12)` | Card borders |
+| `--border-focus` | `rgba(255,255,255,0.3)` | Focus / hover borders |
 
-### Accents (The Scribe Gradient)
-- **Gradient 1 (Pink/Red)**: `#FF0080` (Vivid Raspberry)
-- **Gradient 2 (Purple)**: `#7c3aed` (Violet 600)
-- **Selection**: `selection:bg-[#7c3aed] selection:text-white`
+### Semantic Colors
+| Token | Value | Usage |
+|---|---|---|
+| `--success` | `#10B981` | Sufficient, clear |
+| `--warning` | `#F59E0B` | Low confidence |
+| `--danger` | `#EF4444` | Failed, errors |
+| `--info` | `#06B6D4` | Informational |
+
+### Agent Accent Colors
+| Agent | Color | Hex |
+|---|---|---|
+| Clarity | Cyan | `#06B6D4` |
+| Research | Violet | `#7C3AED` |
+| Validator | Amber | `#F59E0B` |
+| Synthesis | Rose | `#FF3366` |
+
+### Gradients
+- **Accent**: `linear-gradient(135deg, #FF3366, #7C3AED)`
+- **Ribbon**: `linear-gradient(90deg, #FF3366, #7C3AED, #06B6D4)`
 
 ## 3. Typography
-- **Display (Headings)**: **Outfit** or **Playfair Display** (for a technical yet sophisticated look). 
-  - Use `tracking-tighter` and `leading-[1.05]`.
-- **Body**: **Inter** (for maximum readability).
-  - Use `text-sm` for UI elements and `text-lg` for marketing copy.
+
+| Role | Font | Usage | Weight |
+|---|---|---|---|
+| Display | `Fraunces` | Headings, hero text | 400–500 |
+| Body | `Inter` | UI text, buttons, nav | 400–600 |
+| Mono | `JetBrains Mono` | Scores, agent names, code | 400–500 |
 
 ## 4. Key UI Patterns
 
-### Bento Grids
-Use varying column spans (`col-span-1`, `col-span-2`) with `rounded-3xl` and `bg-[#18181b]/50`. Each card should have:
-- `border border-white/10`
-- `backdrop-blur-sm`
-- Subtle hover effects (opacity shifts or slight scaling).
+### Structural Grid Background
+Continuous 1px grid (64px cells) covering the entire page.
 
-### Interactive Backgrounds
-Always include the `InteractiveBackground` component in the root layout of public pages.
-- **Pattern**: 2-3 large, extremely blurred (`200px+`) blobs in corners.
-- **Interaction**: Subtle mouse parallax (offsetting `x` and `y` by `mousePos / 30`).
+### Glassmorphic Surfaces
+`backdrop-filter: blur(12px)`, `border: 1px solid var(--border-subtle)`, `border-radius: 12px`.
 
-### Sticky/Fixed Navbar
-- Use `backdrop-blur-2xl`.
-- Height should shrink on scroll (e.g., `64px` -> `56px`).
-- Background opacity should increase as the user scrolls over content.
+### Interactive Background
+2–3 large gradient blobs with 200px+ blur, mouse parallax at 1/30 factor.
 
-## 5. Component Snippets
+### Navbar
+Sticky, `backdrop-filter: blur(16px)`, height `56px`.
 
-### The "Scribe Button"
-```tsx
-<Link className="h-10 px-4 rounded-lg text-sm font-semibold bg-gradient-to-r from-[#FF0080] to-[#7c3aed] text-white hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
-  Get Started <ArrowRight size={16} />
-</Link>
-```
+## 5. Components
 
-### The "Glass Card"
-```tsx
-<div className="rounded-2xl border border-white/10 bg-[#18181b]/50 backdrop-blur-md p-6 shadow-2xl">
-  {/* Content */}
-</div>
-```
+- **Primary Button**: White bg, scale(0.98) hover, 8px radius
+- **Accent Button**: Gradient bg, animated shift on hover
+- **Glass Card**: Translucent surface, hover translateY(-2px)
+- **Badges**: `JetBrains Mono` 11px, pill radius, semantic colors
+- **Inputs**: Dark surface, violet glow on focus
 
 ## 6. Animation Guidelines
-- **Duration**: Keep transitions between `150ms` and `300ms`.
-- **Easing**: Use `easeInOut` for most UI transitions.
-- **Parallax**: Keep parallax factors low (`1/30` or `1/50`) to avoid motion sickness while adding depth.
+
+- Transitions: `150ms`–`300ms`, `ease-in-out`
+- Agent node pulse: 1.5s glow loop
+- Streaming text: Blinking cursor
+- Graph edges: Dotted → solid color sweep (~500ms)
+- Respect `prefers-reduced-motion`
+
+## 7. Spacing
+
+Sidebar: `320px` · Graph panel: `200px` · Navbar: `56px` · Max content: `1280px`
